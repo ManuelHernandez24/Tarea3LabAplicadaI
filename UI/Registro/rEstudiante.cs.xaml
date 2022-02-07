@@ -1,0 +1,52 @@
+<Window x:Class="Tarea_3.UI.Registro.rEstudiante" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tarea_3.UI.Registro"
+        mc:Ignorable="d"
+        Title="Registro de Carreras" Height="500" Width="300">
+    <Grid>
+
+        <StackPanel Orientation="Vertical" Margin="10"> 
+           
+           <!-- CarreraId -->
+            <StackPanel Orientation="Vertical">
+                <Label Content="Id:"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding EstudianteId}" Width="100" />
+                    <Button Content="🔎 Buscar" /> 
+                </StackPanel>
+            </StackPanel>
+
+
+           <!-- NOMBRE -->
+            <Label Content="Nombres:"/>
+            <TextBox x:Name="NombresTextBox" Text="{Binding Nombres}" Width="200" />
+
+            <Label Content="Email:"/>
+            <TextBox x:Name="EmailTextBox" Text="{Binding CarreraId}" Width="200" />
+
+            <Label Content="Carrera:"/>
+            <ComboBox x:Name="CarreraComboBox" Width="200" />
+
+            <CheckBox x:Name="ActivoCheckBox">Activo</CheckBox>
+            
+            <!-- BARRA DE BOTONES -->
+            <StackPanel 
+                        Margin="0,16,0,0"                      
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center" >
+                
+                <Button Content="🆕 Nuevo" />
+                <Button Content="✔ Guardar"/>
+                <Button Content="⛔ Eliminar"/>
+            </StackPanel>
+
+            <DataGrid Name = "DataGridConsultaCarrera" Height="150" />  
+
+        </StackPanel>
+
+    </Grid>
+</Window>

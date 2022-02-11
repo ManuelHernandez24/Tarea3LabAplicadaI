@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tarea_3.UI.Registro"
         mc:Ignorable="d"
-        Title="Registro de Carreras" Height="500" Width="300">
+        Title="Registro de Estudiantes" Height="500" Width="300">
     <Grid>
 
         <StackPanel Orientation="Vertical" Margin="10"> 
@@ -26,10 +26,17 @@
             <TextBox x:Name="NombresTextBox" Text="{Binding Nombres}" Width="200" />
 
             <Label Content="Email:"/>
-            <TextBox x:Name="EmailTextBox" Text="{Binding CarreraId}" Width="200" />
+            <TextBox x:Name="EmailTextBox" Text="{Binding Email}" Width="200" />
 
             <Label Content="Carrera:"/>
-            <ComboBox x:Name="CarreraComboBox" Width="200" />
+
+            <ComboBox x:Name="CarreraComboBox" Width="200">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Nombre}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+            </ComboBox>
 
             <CheckBox x:Name="ActivoCheckBox">Activo</CheckBox>
             
@@ -39,12 +46,12 @@
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center" >
                 
-                <Button Content="🆕 Nuevo" />
-                <Button Content="✔ Guardar"/>
-                <Button Content="⛔ Eliminar"/>
+                <Button Content="🆕 Nuevo" Click="NuevoButton_Click"/>
+                <Button Content="✔ Guardar" Click="GuardarButton_Click" />
+                <Button Content="⛔ Eliminar" Click="EliminarButton_Click"/>
             </StackPanel>
 
-            <DataGrid Name = "DataGridConsultaCarrera" Height="150" />  
+            <DataGrid Name = "DataGridConsultaEstudiante" Height="150" />  
 
         </StackPanel>
 

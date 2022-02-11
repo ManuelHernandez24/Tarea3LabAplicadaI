@@ -130,21 +130,135 @@ namespace Registro.BLL
             }
         }
 
-        public static List<Carrera> ListaCombobox(Expression<Func<Carrera, bool >> nombreCarrera)
-    {
-        using (var context = new Contexto())
+        public static List<Carrera> GetListaCarrera(Expression<Func<Carrera, bool>> criterio)
         {
-            try
+            using (var contexto = new Contexto())
             {
-                return context.Carrera.Where(nombreCarrera).ToList();
-            }
-            catch (Exception e)
-            {
-                throw;
+                return contexto.Carrera.Where(criterio).ToList();
             }
         }
     }
 
-    }
+    public class EstudianteBLL
+    {
 
+        public static bool Existe(int EstudianteId)
+        {
+            Contexto contexto = new Contexto();
+            bool encontrado = false;
+
+            try
+            {
+                encontrado = contexto.Estudiante.Any(l => l.EstudianteId == EstudianteId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+
+            return encontrado;
+        }
+
+        public static bool Guardar(Estudiante estudiante)
+        {
+            if (!Existe(estudiante.EstudianteId))
+                return Insertar(estudiante);
+            else
+                return Modificar(estudiante);
+        }
+
+        private static bool Insertar(Estudiante estudiante)
+        {
+            Contexto contexto = new Contexto();
+            bool paso = false;
+            try
+            {
+                contexto.Estudiante.Add(estudiante);
+                paso = contexto.SaveChanges() > 0;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return paso;
+        }
+
+        private static bool Modificar(Estudiante estudiante)
+        {
+            Contexto contexto = new Contexto();
+            bool paso = false;
+            try
+            {
+                contexto.Entry(estudiante).State = EntityState.Modified;
+                paso = contexto.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return paso;
+        }
+
+        public static bool Eliminar(int EstudianteId)
+        {
+            Contexto contexto = new Contexto();
+            bool paso = false;
+            try
+            {
+                var estudiante = contexto.Carrera.Find(EstudianteId);
+                if (estudiante != null)
+                {
+                    contexto.Carrera.Remove(estudiante);
+                    paso = contexto.SaveChanges() > 0;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return paso;
+        }
+
+        public static Estudiante? Buscar(int EstudianteId)
+        {
+            Contexto contexto = new Contexto();
+            Estudiante? estudiante;
+            try
+            {
+                estudiante = contexto.Estudiante.Find(EstudianteId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            }
+            return estudiante;
+        }
+
+        public static List<Estudiante> GetList(){
+            using(var contexto = new Contexto()){
+                return contexto.Estudiante.ToList();
+            }
+        }
+    }
 }
